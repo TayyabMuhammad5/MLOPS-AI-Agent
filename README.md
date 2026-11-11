@@ -1,6 +1,9 @@
 # Assignment 03 — Building a Production-Ready MLOps AI Agent
 
-**Course:** MLOps & Production AI Engineering | Fall 2026  
+**Name:** Muhammad Tayyab
+**Roll Number:** 23i-0738
+**Section:** B
+**Course:** MLOps   
 **Project:** `assignment-03-mlops-agent`  
 **Core Stack:** Python 3.11, FastAPI, DVC, MLflow, Apache Airflow 3, Kubernetes, Docker, GitHub Actions
 
