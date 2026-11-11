@@ -1,0 +1,12 @@
+stages:
+  validate_dataset:
+    cmd: python -c "from training.train import validate_dataset_stage; print(validate_dataset_stage('data/churn_dataset.csv'))"
+    deps:
+      - data/churn_dataset.csv
+      - training/train.py
+  train_and_evaluate:
+    cmd: python -c "from dags.training_pipeline import run_pipeline_synchronously; print(run_pipeline_synchronously('data/churn_dataset.csv'))"
+    deps:
+      - data/churn_dataset.csv
+      - training/train.py
+      - dags/training_pipeline.py

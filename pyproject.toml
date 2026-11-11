@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "assignment-03-mlops-agent"
+version = "2.1.0"
+description = "Production-Ready MLOps AI Agent integrating DVC, MLflow, Apache Airflow 3, FastAPI, and Kubernetes"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.23.0",
+    "pydantic>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "pandas>=2.0.0",
+    "numpy>=1.24.0",
+]
+
+[project.optional-dependencies]
+mlops = [
+    "dvc>=3.30.0",
+    "mlflow>=2.9.0",
+    "apache-airflow>=3.0.0",
+    "kubernetes>=28.1.0",
+]
+dev = [
+    "pytest>=7.4.0",
+    "httpx>=0.24.0",
+    "ruff>=0.3.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-v"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"

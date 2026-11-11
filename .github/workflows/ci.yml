@@ -1,0 +1,38 @@
+name: MLOps AI Agent CI
+
+on:
+  push:
+    branches: ["main", "develop"]
+  pull_request:
+    branches: ["main", "develop"]
+
+jobs:
+  lint-and-test:
+    name: Lint & Automated Tests (Python 3.11)
+    runs-on: ubuntu-latest
+    env:
+      MLOPS_ENV: "ci-mocked"
+      APP_VERSION: "v2.1.0"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run Ruff Linter & Syntax Validation
+        run: |
+          ruff check agent/ api/ dags/ training/ tests/
+          python -m compileall -q agent/ api/ dags/ training/ tests/
+
+      - name: Execute Automated Pytest Suite (Mocked External Services)
+        run: |
+          pytest tests/ -v --tb=short

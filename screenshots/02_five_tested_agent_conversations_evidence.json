@@ -1,0 +1,846 @@
+{
+  "scenario_1_dataset_provenance": {
+    "request_id": "req-08926819f5",
+    "query": "Which dataset version was used for experiment 25?",
+    "answer": "Experiment exp-25 used DVC dataset version v2.1, associated with Git commit a4c92e1 (MD5: 9c2e81b4a0f123e77c92a4b610f55d12, rows: 11800), retrieved from remote 's3://mlops-course-dvc-store/churn-datasets'.",
+    "known_facts": [
+      "Experiment exp-25 used DVC dataset version v2.1, associated with Git commit a4c92e1 (MD5: 9c2e81b4a0f123e77c92a4b610f55d12, rows: 11800), retrieved from remote 's3://mlops-course-dvc-store/churn-datasets'."
+    ],
+    "uncertainties": [],
+    "recommended_actions": [],
+    "tools_invoked": [
+      "get_dataset_version"
+    ],
+    "tool_results": [
+      {
+        "tool_name": "get_dataset_version",
+        "status": "success",
+        "data": {
+          "experiment_id": "exp-25",
+          "dataset_version": "v2.1",
+          "git_commit": "a4c92e1",
+          "git_tag": "data-v2.1",
+          "md5": "9c2e81b4a0f123e77c92a4b610f55d12",
+          "rows": 11800,
+          "features": 18,
+          "dvc_remote": "s3://mlops-course-dvc-store/churn-datasets"
+        },
+        "evidence_source": "dvc_provenance_registry",
+        "error": null,
+        "duration_ms": 1.602,
+        "request_id": "req-08926819f5"
+      }
+    ],
+    "audit_logs": [
+      {
+        "request_id": "req-08926819f5",
+        "tool_name": "get_dataset_version",
+        "status": "success",
+        "duration_ms": 1.602,
+        "timestamp": "2026-11-11T10:21:19.991446+00:00",
+        "sanitized_args": {
+          "experiment_id": "exp-25"
+        },
+        "error_message": null
+      }
+    ],
+    "llm_provider": "groq",
+    "llm_model": "llama-3.3-70b-versatile",
+    "status": "completed"
+  },
+  "scenario_2_model_selection": {
+    "request_id": "req-4fa532ff82",
+    "query": "Compare the last five training runs and recommend the best candidate based on F1 score.",
+    "answer": "Compared 5 MLflow runs on 'f1_score'. Recommended candidate is 'run_27_lgbm_v2_2_calibrated' (F1=0.894, ROC-AUC=0.944, latency=11.8ms, dataset=v2.2).",
+    "known_facts": [
+      "Compared 5 MLflow runs on 'f1_score'. Recommended candidate is 'run_27_lgbm_v2_2_calibrated' (F1=0.894, ROC-AUC=0.944, latency=11.8ms, dataset=v2.2).",
+      "Run 'run_26_deep_ensemble_overfit' (stacking-ensemble-v2.2) achieved the highest raw f1_score (0.896), but is NOT production-ready because quality_gate=FAILED_LATENCY_SLO (inference_latency_ms=142.0ms > 50.0ms SLO, calibration_ece=0.089)."
+    ],
+    "uncertainties": [],
+    "recommended_actions": [],
+    "tools_invoked": [
+      "compare_runs"
+    ],
+    "tool_results": [
+      {
+        "tool_name": "compare_runs",
+        "status": "success",
+        "data": {
+          "compared_count": 5,
+          "primary_metric": "f1_score",
+          "runs": [
+            {
+              "run_id": "run_23_xgb_baseline",
+              "experiment_id": "exp-23",
+              "run_name": "xgb-baseline-v2.0",
+              "model_type": "XGBoost",
+              "dataset_version": "v2.0",
+              "git_commit": "3b18e42",
+              "f1_score": 0.842,
+              "roc_auc": 0.889,
+              "precision": 0.855,
+              "recall": 0.83,
+              "inference_latency_ms": 14.2,
+              "calibration_ece": 0.031,
+              "quality_gate": "PASSED"
+            },
+            {
+              "run_id": "run_24_rf_tuned",
+              "experiment_id": "exp-24",
+              "run_name": "rf-tuned-v2.1",
+              "model_type": "RandomForest",
+              "dataset_version": "v2.1",
+              "git_commit": "a4c92e1",
+              "f1_score": 0.868,
+              "roc_auc": 0.912,
+              "precision": 0.874,
+              "recall": 0.862,
+              "inference_latency_ms": 18.5,
+              "calibration_ece": 0.024,
+              "quality_gate": "PASSED"
+            },
+            {
+              "run_id": "run_25_lgbm_candidate",
+              "experiment_id": "exp-25",
+              "run_name": "lightgbm-v2.1-prod",
+              "model_type": "LightGBM",
+              "dataset_version": "v2.1",
+              "git_commit": "a4c92e1",
+              "f1_score": 0.891,
+              "roc_auc": 0.938,
+              "precision": 0.898,
+              "recall": 0.884,
+              "inference_latency_ms": 11.4,
+              "calibration_ece": 0.018,
+              "quality_gate": "PASSED"
+            },
+            {
+              "run_id": "run_26_deep_ensemble_overfit",
+              "experiment_id": "exp-26",
+              "run_name": "stacking-ensemble-v2.2",
+              "model_type": "StackingEnsemble",
+              "dataset_version": "v2.2",
+              "git_commit": "7f3b91c",
+              "f1_score": 0.896,
+              "roc_auc": 0.931,
+              "precision": 0.942,
+              "recall": 0.854,
+              "inference_latency_ms": 142.0,
+              "calibration_ece": 0.089,
+              "quality_gate": "FAILED_LATENCY_SLO"
+            },
+            {
+              "run_id": "run_27_lgbm_v2_2_calibrated",
+              "experiment_id": "exp-27",
+              "run_name": "lightgbm-v2.2-calibrated",
+              "model_type": "LightGBM",
+              "dataset_version": "v2.2",
+              "git_commit": "7f3b91c",
+              "f1_score": 0.894,
+              "roc_auc": 0.944,
+              "precision": 0.901,
+              "recall": 0.887,
+              "inference_latency_ms": 11.8,
+              "calibration_ece": 0.015,
+              "quality_gate": "PASSED"
+            }
+          ],
+          "recommended_candidate": {
+            "run_id": "run_27_lgbm_v2_2_calibrated",
+            "experiment_id": "exp-27",
+            "run_name": "lightgbm-v2.2-calibrated",
+            "metrics": {
+              "f1_score": 0.894,
+              "roc_auc": 0.944,
+              "precision": 0.901,
+              "recall": 0.887,
+              "inference_latency_ms": 11.8,
+              "calibration_ece": 0.015
+            },
+            "params": {
+              "model_type": "LightGBM",
+              "num_leaves": "31",
+              "learning_rate": "0.025",
+              "n_estimators": "450"
+            },
+            "dataset_version": "v2.2",
+            "git_commit": "7f3b91c",
+            "quality_gate": "PASSED"
+          },
+          "raw_highest_candidate": {
+            "run_id": "run_26_deep_ensemble_overfit",
+            "experiment_id": "exp-26",
+            "run_name": "stacking-ensemble-v2.2",
+            "metrics": {
+              "f1_score": 0.896,
+              "roc_auc": 0.931,
+              "precision": 0.942,
+              "recall": 0.854,
+              "inference_latency_ms": 142.0,
+              "calibration_ece": 0.089
+            },
+            "dataset_version": "v2.2",
+            "git_commit": "7f3b91c",
+            "quality_gate": "FAILED_LATENCY_SLO"
+          },
+          "selection_rationale": [
+            "Run 'run_26_deep_ensemble_overfit' (stacking-ensemble-v2.2) achieved the highest raw f1_score (0.896), but is NOT production-ready because quality_gate=FAILED_LATENCY_SLO (inference_latency_ms=142.0ms > 50.0ms SLO, calibration_ece=0.089)."
+          ]
+        },
+        "evidence_source": "mlflow_tracking_client",
+        "error": null,
+        "duration_ms": 0.031,
+        "request_id": "req-4fa532ff82"
+      }
+    ],
+    "audit_logs": [
+      {
+        "request_id": "req-4fa532ff82",
+        "tool_name": "compare_runs",
+        "status": "success",
+        "duration_ms": 0.031,
+        "timestamp": "2026-11-11T10:21:19.991867+00:00",
+        "sanitized_args": {
+          "last_n": 5,
+          "metric": "f1_score"
+        },
+        "error_message": null
+      }
+    ],
+    "llm_provider": "groq",
+    "llm_model": "llama-3.3-70b-versatile",
+    "status": "completed"
+  },
+  "scenario_3_pipeline_execution": {
+    "request_id": "req-c0d239c9bc",
+    "query": "Trigger the model training pipeline and report whether execution succeeded.",
+    "answer": "Triggered Airflow DAG 'churn_training_pipeline' via POST http://airflow-api.mlops-prod.svc:8080/api/v2/dags/churn_training_pipeline/dagRuns (dag_run_id='agent_triggered__2026-11-11T10:21:19Z_499918', state='queued'). Latest Airflow DAG run 'manual__2026-11-10T09:15:00Z' for 'churn_training_pipeline' completed with state='success' on dataset v2.2.",
+    "known_facts": [
+      "Triggered Airflow DAG 'churn_training_pipeline' via POST http://airflow-api.mlops-prod.svc:8080/api/v2/dags/churn_training_pipeline/dagRuns (dag_run_id='agent_triggered__2026-11-11T10:21:19Z_499918', state='queued').",
+      "Latest Airflow DAG run 'manual__2026-11-10T09:15:00Z' for 'churn_training_pipeline' completed with state='success' on dataset v2.2."
+    ],
+    "uncertainties": [],
+    "recommended_actions": [],
+    "tools_invoked": [
+      "trigger_training_dag",
+      "get_dag_run_status"
+    ],
+    "tool_results": [
+      {
+        "tool_name": "trigger_training_dag",
+        "status": "success",
+        "data": {
+          "endpoint": "POST http://airflow-api.mlops-prod.svc:8080/api/v2/dags/churn_training_pipeline/dagRuns",
+          "dag_id": "churn_training_pipeline",
+          "dag_run_id": "agent_triggered__2026-11-11T10:21:19Z_499918",
+          "state": "queued",
+          "conf": {
+            "dataset_version": "v2.2",
+            "f1_threshold": 0.85,
+            "triggered_by": "mlops_agent"
+          },
+          "pipeline_stages": [
+            "validate_dataset",
+            "preprocess_data",
+            "train_model",
+            "evaluate_and_log_mlflow",
+            "apply_model_quality_gate"
+          ]
+        },
+        "evidence_source": "airflow_v3_rest_api",
+        "error": null,
+        "duration_ms": 0.031,
+        "request_id": "req-c0d239c9bc"
+      },
+      {
+        "tool_name": "get_dag_run_status",
+        "status": "success",
+        "data": {
+          "dag_id": "churn_training_pipeline",
+          "dag_run_id": "manual__2026-11-10T09:15:00Z",
+          "state": "success",
+          "logical_date": "2026-11-10T09:15:00Z",
+          "conf": {
+            "dataset_version": "v2.2",
+            "experiment_id": "exp-27"
+          },
+          "tasks": [
+            {
+              "task_id": "validate_dataset",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 8.4
+            },
+            {
+              "task_id": "preprocess_data",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 19.2
+            },
+            {
+              "task_id": "train_model",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 64.7
+            },
+            {
+              "task_id": "evaluate_and_log_mlflow",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 12.1
+            },
+            {
+              "task_id": "apply_model_quality_gate",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 2.3
+            }
+          ],
+          "all_runs_summary": [
+            {
+              "dag_run_id": "manual__2026-11-10T09:15:00Z",
+              "state": "success",
+              "logical_date": "2026-11-10T09:15:00Z"
+            },
+            {
+              "dag_run_id": "scheduled__2026-11-08T15:00:00Z",
+              "state": "failed",
+              "logical_date": "2026-11-08T15:00:00Z"
+            },
+            {
+              "dag_run_id": "agent_triggered__2026-11-11T10:21:19Z_499918",
+              "state": "queued",
+              "logical_date": "2026-11-11T10:21:19Z"
+            }
+          ]
+        },
+        "evidence_source": "airflow_v3_rest_api",
+        "error": null,
+        "duration_ms": 0.005,
+        "request_id": "req-c0d239c9bc"
+      }
+    ],
+    "audit_logs": [
+      {
+        "request_id": "req-c0d239c9bc",
+        "tool_name": "trigger_training_dag",
+        "status": "success",
+        "duration_ms": 0.031,
+        "timestamp": "2026-11-11T10:21:19.992354+00:00",
+        "sanitized_args": {
+          "dag_id": "churn_training_pipeline"
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-c0d239c9bc",
+        "tool_name": "get_dag_run_status",
+        "status": "success",
+        "duration_ms": 0.005,
+        "timestamp": "2026-11-11T10:21:19.992428+00:00",
+        "sanitized_args": {
+          "dag_id": "churn_training_pipeline"
+        },
+        "error_message": null
+      }
+    ],
+    "llm_provider": "groq",
+    "llm_model": "llama-3.3-70b-versatile",
+    "status": "completed"
+  },
+  "scenario_4_deployment_diagnosis": {
+    "request_id": "req-cdae1aa553",
+    "query": "Why is my prediction API unavailable?",
+    "answer": "Kubernetes deployment 'churn-inference-api' in 'mlops-prod' has 1/2 ready replicas (cluster_healthy=False). Root cause: Pod 'churn-inference-api-7f9a2c1b0-z2q8w' (image v2.2.0-rc1) is in CrashLoopBackOff with 6 restarts due to OOMKilled (Exit Code 137). Container logs show loading the unapproved 612MB StackingEnsemble artifact exceeded the 512Mi memory limit, causing readiness (/readyz) and liveness (/healthz) probes to fail.",
+    "known_facts": [
+      "Kubernetes deployment 'churn-inference-api' in 'mlops-prod' has 1/2 ready replicas (cluster_healthy=False).",
+      "Root cause: Pod 'churn-inference-api-7f9a2c1b0-z2q8w' (image v2.2.0-rc1) is in CrashLoopBackOff with 6 restarts due to OOMKilled (Exit Code 137). Container logs show loading the unapproved 612MB StackingEnsemble artifact exceeded the 512Mi memory limit, causing readiness (/readyz) and liveness (/healthz) probes to fail.",
+      "Pod 'churn-inference-api-7f9a2c1b0-z2q8w' state is 'CrashLoopBackOff' (restarts=6, last_exit_code=137)."
+    ],
+    "uncertainties": [],
+    "recommended_actions": [
+      "Roll back deployment 'churn-inference-api' to verified image v2.1.0 (LightGBM model version 2) or promote calibrated LightGBM run_27_lgbm_v2_2_calibrated within the 512Mi memory envelope."
+    ],
+    "tools_invoked": [
+      "list_pods_and_deployments",
+      "diagnose_unhealthy_pods",
+      "get_pod_status_and_logs",
+      "inspect_services"
+    ],
+    "tool_results": [
+      {
+        "tool_name": "list_pods_and_deployments",
+        "status": "success",
+        "data": {
+          "namespace": "mlops-prod",
+          "deployments": [
+            {
+              "name": "churn-inference-api",
+              "namespace": "mlops-prod",
+              "desired_replicas": 2,
+              "ready_replicas": 1,
+              "available_replicas": 1,
+              "strategy": "RollingUpdate"
+            }
+          ],
+          "pods": [
+            {
+              "name": "churn-inference-api-7f9a2c1b0-z2q8w",
+              "phase": "Running",
+              "ready": "0/1",
+              "state": "CrashLoopBackOff",
+              "last_termination_reason": "OOMKilled (Exit Code 137)",
+              "restarts": 6,
+              "node": "gke-mlops-pool-1-88a1",
+              "image": "ghcr.io/mlops-course/churn-inference-api:v2.2.0-rc1",
+              "liveness_probe": "failing (HTTP 503 /healthz timeout)",
+              "readiness_probe": "failing (Connection refused on :8000/readyz)"
+            },
+            {
+              "name": "churn-inference-api-6d8f9b7c4-x9k2p",
+              "phase": "Running",
+              "ready": "1/1",
+              "state": "Running",
+              "restarts": 0,
+              "node": "gke-mlops-pool-1-88a2",
+              "image": "ghcr.io/mlops-course/churn-inference-api:v2.1.0",
+              "liveness_probe": "passing",
+              "readiness_probe": "passing"
+            }
+          ],
+          "cluster_healthy": false
+        },
+        "evidence_source": "kubernetes_core_and_apps_v1_api",
+        "error": null,
+        "duration_ms": 0.005,
+        "request_id": "req-cdae1aa553"
+      },
+      {
+        "tool_name": "diagnose_unhealthy_pods",
+        "status": "success",
+        "data": {
+          "namespace": "mlops-prod",
+          "unhealthy_pod_count": 1,
+          "unhealthy_pods": [
+            {
+              "name": "churn-inference-api-7f9a2c1b0-z2q8w",
+              "state": "CrashLoopBackOff",
+              "restarts": 6,
+              "termination_reason": "OOMKilled (Exit Code 137)",
+              "failed_probes": [
+                "readinessProbe (/readyz)",
+                "livenessProbe (/healthz)"
+              ]
+            }
+          ],
+          "events": [
+            "Warning BackOff Pod/churn-inference-api-7f9a2c1b0-z2q8w Back-off restarting failed container",
+            "Warning Unhealthy Pod/churn-inference-api-7f9a2c1b0-z2q8w Readiness probe failed: HTTP probe failed with statuscode: 503",
+            "Warning OOMKilling Node/gke-mlops-pool-1-88a1 Memory cgroup out of memory: Killed process (python3) total-vm:640000kB, limit:524288kB"
+          ],
+          "diagnosis": "Root cause: Pod 'churn-inference-api-7f9a2c1b0-z2q8w' (image v2.2.0-rc1) is in CrashLoopBackOff with 6 restarts due to OOMKilled (Exit Code 137). Container logs show loading the unapproved 612MB StackingEnsemble artifact exceeded the 512Mi memory limit, causing readiness (/readyz) and liveness (/healthz) probes to fail.",
+          "recommended_remediation": "Roll back deployment 'churn-inference-api' to verified image v2.1.0 (LightGBM model version 2) or promote calibrated LightGBM run_27_lgbm_v2_2_calibrated within the 512Mi memory envelope."
+        },
+        "evidence_source": "kubernetes_events_and_probes",
+        "error": null,
+        "duration_ms": 0.003,
+        "request_id": "req-cdae1aa553"
+      },
+      {
+        "tool_name": "get_pod_status_and_logs",
+        "status": "success",
+        "data": {
+          "namespace": "mlops-prod",
+          "pod_name": "churn-inference-api-7f9a2c1b0-z2q8w",
+          "container_state": "CrashLoopBackOff",
+          "last_exit_code": 137,
+          "termination_reason": "OOMKilled",
+          "restarts": 6,
+          "logs": [
+            "2026-11-11T08:40:01Z INFO  Starting FastAPI churn-inference-api v2.2.0-rc1",
+            "2026-11-11T08:40:02Z INFO  Loading ConfigMap churn-inference-config (MODEL_STAGE=Staging)",
+            "2026-11-11T08:40:04Z ERROR Failed to deserialize artifact 's3://mlops-course-dvc-store/models/run_26_deep_ensemble/model.pkl': MemoryError: Allocation of 612MB exceeds container memory limit (512Mi)",
+            "2026-11-11T08:40:05Z FATAL Worker process killed with signal SIGKILL (Exit Code 137 - OOMKilled)"
+          ]
+        },
+        "evidence_source": "kubernetes_pod_logs_v1",
+        "error": null,
+        "duration_ms": 0.003,
+        "request_id": "req-cdae1aa553"
+      },
+      {
+        "tool_name": "inspect_services",
+        "status": "success",
+        "data": {
+          "namespace": "mlops-prod",
+          "services": [
+            {
+              "name": "churn-inference-service",
+              "type": "ClusterIP",
+              "cluster_ip": "10.96.42.18",
+              "ports": [
+                {
+                  "name": "http",
+                  "port": 80,
+                  "target_port": 8000,
+                  "protocol": "TCP"
+                }
+              ],
+              "selector": {
+                "app": "churn-inference-api"
+              },
+              "endpoints_ready": 2
+            }
+          ]
+        },
+        "evidence_source": "kubernetes_service_v1_api",
+        "error": null,
+        "duration_ms": 0.004,
+        "request_id": "req-cdae1aa553"
+      }
+    ],
+    "audit_logs": [
+      {
+        "request_id": "req-cdae1aa553",
+        "tool_name": "list_pods_and_deployments",
+        "status": "success",
+        "duration_ms": 0.005,
+        "timestamp": "2026-11-11T10:21:19.992751+00:00",
+        "sanitized_args": {
+          "namespace": "mlops-prod",
+          "inject_failure": true
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-cdae1aa553",
+        "tool_name": "diagnose_unhealthy_pods",
+        "status": "success",
+        "duration_ms": 0.003,
+        "timestamp": "2026-11-11T10:21:19.992822+00:00",
+        "sanitized_args": {
+          "namespace": "mlops-prod",
+          "inject_failure": true
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-cdae1aa553",
+        "tool_name": "get_pod_status_and_logs",
+        "status": "success",
+        "duration_ms": 0.003,
+        "timestamp": "2026-11-11T10:21:19.992894+00:00",
+        "sanitized_args": {
+          "pod_name": "churn-inference-api-7f9a2c1b0-z2q8w",
+          "namespace": "mlops-prod",
+          "inject_failure": true
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-cdae1aa553",
+        "tool_name": "inspect_services",
+        "status": "success",
+        "duration_ms": 0.004,
+        "timestamp": "2026-11-11T10:21:19.992971+00:00",
+        "sanitized_args": {
+          "namespace": "mlops-prod"
+        },
+        "error_message": null
+      }
+    ],
+    "llm_provider": "groq",
+    "llm_model": "llama-3.3-70b-versatile",
+    "status": "completed"
+  },
+  "scenario_5_multi_tool_reasoning": {
+    "request_id": "req-107337e7ee",
+    "query": "Find the best recent model, identify the dataset version used to train it, check the deployment status, and explain whether retraining is necessary.",
+    "answer": "Best production-ready MLflow run is 'run_27_lgbm_v2_2_calibrated' (lightgbm-v2.2-calibrated, experiment exp-27) trained on DVC dataset v2.2 (commit 7f3b91c) with F1=0.894, ROC-AUC=0.944, latency=11.8ms, and quality_gate=PASSED. Run 'run_26_deep_ensemble_overfit' had a marginally higher raw F1 (0.896) but failed the production quality gate (FAILED_LATENCY_SLO) due to 142.0ms inference latency. Experiment exp-27 used DVC dataset version v2.2, associated with Git commit 7f3b91c (MD5: cf071983e9d6e4ab55d53a20daf587f2, rows: 12500), retrieved from remote 's3://mlops-course-dvc-store/churn-datasets'. Kubernetes namespace 'mlops-prod' currently runs Deployment 'churn-inference-api' image 'ghcr.io/mlops-course/churn-inference-api:v2.1.0' serving MLflow model 'churn-classifier' v2 (run 'run_25_lgbm_candidate', trained on DVC dataset v2.1 / commit a4c92e1). Kubernetes deployment 'churn-inference-api' in 'mlops-prod' has 2/2 ready replicas (cluster_healthy=True). Latest Airflow DAG run 'manual__2026-11-10T09:15:00Z' for 'churn_training_pipeline' completed with state='success' on dataset v2.2. Retraining Assessment: Immediate retraining is NOT necessary because the latest dataset v2.2 (commit 7f3b91c) was already trained in Airflow run 'manual__2026-11-10T09:15:00Z' producing calibrated LightGBM run 'run_27_lgbm_v2_2_calibrated' (F1=0.894, PASSED quality gate). However, Kubernetes currently serves model v2 ('run_25_lgbm_candidate', trained on dataset v2.1), so promoting model v3 to Kubernetes is recommended pending explicit user confirmation.",
+    "known_facts": [
+      "Best production-ready MLflow run is 'run_27_lgbm_v2_2_calibrated' (lightgbm-v2.2-calibrated, experiment exp-27) trained on DVC dataset v2.2 (commit 7f3b91c) with F1=0.894, ROC-AUC=0.944, latency=11.8ms, and quality_gate=PASSED.",
+      "Run 'run_26_deep_ensemble_overfit' had a marginally higher raw F1 (0.896) but failed the production quality gate (FAILED_LATENCY_SLO) due to 142.0ms inference latency.",
+      "Experiment exp-27 used DVC dataset version v2.2, associated with Git commit 7f3b91c (MD5: cf071983e9d6e4ab55d53a20daf587f2, rows: 12500), retrieved from remote 's3://mlops-course-dvc-store/churn-datasets'.",
+      "Kubernetes namespace 'mlops-prod' currently runs Deployment 'churn-inference-api' image 'ghcr.io/mlops-course/churn-inference-api:v2.1.0' serving MLflow model 'churn-classifier' v2 (run 'run_25_lgbm_candidate', trained on DVC dataset v2.1 / commit a4c92e1).",
+      "Kubernetes deployment 'churn-inference-api' in 'mlops-prod' has 2/2 ready replicas (cluster_healthy=True).",
+      "Latest Airflow DAG run 'manual__2026-11-10T09:15:00Z' for 'churn_training_pipeline' completed with state='success' on dataset v2.2."
+    ],
+    "uncertainties": [
+      "Live production feature-drift telemetry and real-time ground-truth churn labels for the last 24 hours are not yet available in MLflow."
+    ],
+    "recommended_actions": [
+      "Immediate Airflow retraining is NOT necessary and was NOT automatically triggered because Airflow run 'manual__2026-11-10T09:15:00Z' already trained calibrated LightGBM model 'run_27_lgbm_v2_2_calibrated' (F1=0.894, quality_gate=PASSED) on the latest DVC dataset v2.2 (commit 7f3b91c).",
+      "Instead of retraining, promote already-trained MLflow model version 3 ('run_27_lgbm_v2_2_calibrated', dataset v2.2) from Staging to Kubernetes 'mlops-prod' (which currently serves v2.1 model 'run_25_lgbm_candidate') after explicit operator confirmation."
+    ],
+    "tools_invoked": [
+      "find_best_run",
+      "get_dataset_version",
+      "get_deployed_version",
+      "list_pods_and_deployments",
+      "get_dag_run_status"
+    ],
+    "tool_results": [
+      {
+        "tool_name": "find_best_run",
+        "status": "success",
+        "data": {
+          "optimization_metric": "f1_score",
+          "raw_highest_run": {
+            "run_id": "run_26_deep_ensemble_overfit",
+            "experiment_id": "exp-26",
+            "run_name": "stacking-ensemble-v2.2",
+            "metrics": {
+              "f1_score": 0.896,
+              "roc_auc": 0.931,
+              "precision": 0.942,
+              "recall": 0.854,
+              "inference_latency_ms": 142.0,
+              "calibration_ece": 0.089
+            },
+            "dataset_version": "v2.2",
+            "git_commit": "7f3b91c",
+            "quality_gate": "FAILED_LATENCY_SLO"
+          },
+          "recommended_production_run": {
+            "run_id": "run_27_lgbm_v2_2_calibrated",
+            "experiment_id": "exp-27",
+            "run_name": "lightgbm-v2.2-calibrated",
+            "metrics": {
+              "f1_score": 0.894,
+              "roc_auc": 0.944,
+              "precision": 0.901,
+              "recall": 0.887,
+              "inference_latency_ms": 11.8,
+              "calibration_ece": 0.015
+            },
+            "params": {
+              "model_type": "LightGBM",
+              "num_leaves": "31",
+              "learning_rate": "0.025",
+              "n_estimators": "450"
+            },
+            "dataset_version": "v2.2",
+            "git_commit": "7f3b91c",
+            "quality_gate": "PASSED"
+          },
+          "production_readiness_notes": [
+            "Run 'run_26_deep_ensemble_overfit' (stacking-ensemble-v2.2) achieved the highest raw f1_score (0.896), but is NOT production-ready because quality_gate=FAILED_LATENCY_SLO (inference_latency_ms=142.0ms > 50.0ms SLO, calibration_ece=0.089)."
+          ]
+        },
+        "evidence_source": "mlflow_tracking_client",
+        "error": null,
+        "duration_ms": 0.013,
+        "request_id": "req-107337e7ee"
+      },
+      {
+        "tool_name": "get_dataset_version",
+        "status": "success",
+        "data": {
+          "experiment_id": "exp-27",
+          "dataset_version": "v2.2",
+          "git_commit": "7f3b91c",
+          "git_tag": "data-v2.2",
+          "md5": "cf071983e9d6e4ab55d53a20daf587f2",
+          "rows": 12500,
+          "features": 18,
+          "dvc_remote": "s3://mlops-course-dvc-store/churn-datasets"
+        },
+        "evidence_source": "dvc_provenance_registry",
+        "error": null,
+        "duration_ms": 1.262,
+        "request_id": "req-107337e7ee"
+      },
+      {
+        "tool_name": "get_deployed_version",
+        "status": "success",
+        "data": {
+          "namespace": "mlops-prod",
+          "deployment_name": "churn-inference-api",
+          "app_version": "v2.1.0",
+          "image": "ghcr.io/mlops-course/churn-inference-api:v2.1.0",
+          "registered_model_name": "churn-classifier",
+          "registered_model_version": "2",
+          "mlflow_run_id": "run_25_lgbm_candidate",
+          "dvc_dataset_version": "v2.1",
+          "git_commit": "a4c92e1",
+          "configmap_name": "churn-inference-config"
+        },
+        "evidence_source": "kubernetes_deployment_spec",
+        "error": null,
+        "duration_ms": 0.003,
+        "request_id": "req-107337e7ee"
+      },
+      {
+        "tool_name": "list_pods_and_deployments",
+        "status": "success",
+        "data": {
+          "namespace": "mlops-prod",
+          "deployments": [
+            {
+              "name": "churn-inference-api",
+              "namespace": "mlops-prod",
+              "desired_replicas": 2,
+              "ready_replicas": 2,
+              "available_replicas": 2,
+              "strategy": "RollingUpdate"
+            }
+          ],
+          "pods": [
+            {
+              "name": "churn-inference-api-6d8f9b7c4-x9k2p",
+              "phase": "Running",
+              "ready": "1/1",
+              "restarts": 0,
+              "node": "gke-mlops-pool-1-88a1",
+              "image": "ghcr.io/mlops-course/churn-inference-api:v2.1.0",
+              "liveness_probe": "passing",
+              "readiness_probe": "passing"
+            },
+            {
+              "name": "churn-inference-api-6d8f9b7c4-m4v7q",
+              "phase": "Running",
+              "ready": "1/1",
+              "restarts": 0,
+              "node": "gke-mlops-pool-1-88a2",
+              "image": "ghcr.io/mlops-course/churn-inference-api:v2.1.0",
+              "liveness_probe": "passing",
+              "readiness_probe": "passing"
+            }
+          ],
+          "cluster_healthy": true
+        },
+        "evidence_source": "kubernetes_core_and_apps_v1_api",
+        "error": null,
+        "duration_ms": 0.003,
+        "request_id": "req-107337e7ee"
+      },
+      {
+        "tool_name": "get_dag_run_status",
+        "status": "success",
+        "data": {
+          "dag_id": "churn_training_pipeline",
+          "dag_run_id": "manual__2026-11-10T09:15:00Z",
+          "state": "success",
+          "logical_date": "2026-11-10T09:15:00Z",
+          "conf": {
+            "dataset_version": "v2.2",
+            "experiment_id": "exp-27"
+          },
+          "tasks": [
+            {
+              "task_id": "validate_dataset",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 8.4
+            },
+            {
+              "task_id": "preprocess_data",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 19.2
+            },
+            {
+              "task_id": "train_model",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 64.7
+            },
+            {
+              "task_id": "evaluate_and_log_mlflow",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 12.1
+            },
+            {
+              "task_id": "apply_model_quality_gate",
+              "state": "success",
+              "try_number": 1,
+              "duration_sec": 2.3
+            }
+          ],
+          "all_runs_summary": [
+            {
+              "dag_run_id": "manual__2026-11-10T09:15:00Z",
+              "state": "success",
+              "logical_date": "2026-11-10T09:15:00Z"
+            },
+            {
+              "dag_run_id": "scheduled__2026-11-08T15:00:00Z",
+              "state": "failed",
+              "logical_date": "2026-11-08T15:00:00Z"
+            },
+            {
+              "dag_run_id": "agent_triggered__2026-11-11T10:21:19Z_499918",
+              "state": "queued",
+              "logical_date": "2026-11-11T10:21:19Z"
+            }
+          ]
+        },
+        "evidence_source": "airflow_v3_rest_api",
+        "error": null,
+        "duration_ms": 0.005,
+        "request_id": "req-107337e7ee"
+      }
+    ],
+    "audit_logs": [
+      {
+        "request_id": "req-107337e7ee",
+        "tool_name": "find_best_run",
+        "status": "success",
+        "duration_ms": 0.013,
+        "timestamp": "2026-11-11T10:21:19.993419+00:00",
+        "sanitized_args": {
+          "metric": "f1_score"
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-107337e7ee",
+        "tool_name": "get_dataset_version",
+        "status": "success",
+        "duration_ms": 1.262,
+        "timestamp": "2026-11-11T10:21:19.994740+00:00",
+        "sanitized_args": {
+          "experiment_id": "exp-27"
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-107337e7ee",
+        "tool_name": "get_deployed_version",
+        "status": "success",
+        "duration_ms": 0.003,
+        "timestamp": "2026-11-11T10:21:19.994819+00:00",
+        "sanitized_args": {
+          "namespace": "mlops-prod"
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-107337e7ee",
+        "tool_name": "list_pods_and_deployments",
+        "status": "success",
+        "duration_ms": 0.003,
+        "timestamp": "2026-11-11T10:21:19.994871+00:00",
+        "sanitized_args": {
+          "namespace": "mlops-prod"
+        },
+        "error_message": null
+      },
+      {
+        "request_id": "req-107337e7ee",
+        "tool_name": "get_dag_run_status",
+        "status": "success",
+        "duration_ms": 0.005,
+        "timestamp": "2026-11-11T10:21:19.994937+00:00",
+        "sanitized_args": {
+          "dag_id": "churn_training_pipeline"
+        },
+        "error_message": null
+      }
+    ],
+    "llm_provider": "groq",
+    "llm_model": "llama-3.3-70b-versatile",
+    "status": "completed"
+  }
+}

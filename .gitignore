@@ -1,0 +1,45 @@
+# Environment variables & secrets (NEVER commit to Git)
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+kubeconfig*
+service-account*.json
+
+# Python bytecode & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Testing & linting caches
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# MLflow & Airflow local runtime state
+mlruns/
+mlartifacts/
+airflow.db
+airflow.cfg
+webserver_config.py
+logs/
+
+# DVC local cache & temp files (.dvc pointers, dvc.yaml, and sample CI dataset stay tracked)
+.dvc/cache/
+.dvc/tmp/
+
+# OS / IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
